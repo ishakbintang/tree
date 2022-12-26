@@ -1,0 +1,133 @@
+#include <iostream>
+using namespace std;
+
+struct Tree{
+    string data;
+    Tree *left,*right;
+};
+
+Tree *nodeBaru;
+
+Tree *createTree(string data){
+    nodeBaru = new Tree();
+    nodeBaru->data = data;
+    nodeBaru->left = NULL;
+    nodeBaru->right = NULL;
+    return nodeBaru;
+}
+
+void masukan(Tree* &root,char arah,string nilai){
+    //ketika kosong.
+    if(root == NULL){
+        root=createTree(nilai);
+    }else if(arah == 'L'){
+        masukan(root->left,'L',nilai);
+    }else{
+        masukan(root->right,'R',nilai);
+    }
+}
+
+void preOrder(Tree *current){
+    if(current!=NULL){
+        cout << " " << current->data;
+        preOrder(current->left);
+        preOrder(current->right);
+    }
+}
+
+void inOrder(Tree *current){
+    if(current!=NULL){
+        inOrder(current->left);
+        cout << " " << current -> data;
+        inOrder(current->right);
+    }
+}
+
+void postOrder(Tree *current){
+    if(current!=NULL){
+        postOrder(current->left);
+        postOrder(current-> right);
+        cout << " " << current -> data;
+    }
+}
+
+
+int main(){
+    Tree *root = NULL;
+
+    int pilih;
+    string nama;
+
+
+    cout<<"1) Insert Awal"<<endl;
+    cout<<"2) Insert kanan"<<endl;
+    cout<<"3) Insert kiri "<<endl;
+    cout<<"4) Tampil praorde"<<endl;
+    cout<<"5) Tampil inorder"<<endl;
+    cout<<"6) Tampil post"<<endl;
+    cout<<"7) Exit"<<endl;
+
+    do {
+    cout<<endl;
+      cout<<"Enter choice: ";
+      cin>>pilih;
+      cout<<endl;
+      switch(pilih) {
+         case 1: {
+            cout<<"Masukan data: ";
+            cin>>nama;
+            masukan(root,'O',nama);
+            cout<<"Data Root berhasil masuk bernama-"<<nama<<endl;
+            break;
+         }
+         case 2:{
+             cout<<root->data<<endl;
+             cout<<"Masukan data: ";
+             cin>>nama;
+             masukan(root,'R',nama);
+            //cout<<"terdapat parent "<<parent->nama<<" ";
+            cout<<"Data kekanan berhasil masuk bernama-"<<nama<<endl;
+            break;
+         }
+         case 3: {
+            cout<<"Masukan data: ";
+            cin>>nama;
+            masukan(root,'L',nama);
+            cout<<"Data kekiri berhasil masuk bernama-"<<nama<<endl;
+            break;
+         }
+         case 4: {
+            cout<<"Tampil Pre-Order"<<endl;
+            preOrder(root);
+            cout<<endl;
+            break;
+         }
+         case 5:{
+            cout<<"Tampil In Order"<<endl;
+            inOrder(root);
+            break;
+         }
+
+         case 6:{
+            cout<<"Tampil Post Order"<<endl;
+            postOrder(root);
+            break;
+         }
+         default: {
+            cout<<"Pilihan tidak ada"<<endl;
+            break;
+         }
+      }
+   }while(pilih!=7);
+
+    // Pre order : mencetak Data/parent -> Left children -> Right children
+
+
+    // In order : mencetak Left children -> Data/parent  -> Right children
+
+
+    // Post order : mencetak Left children -> Right children -> Data/parent
+
+
+    return 0;
+}
